@@ -7,7 +7,7 @@
 </head>
 <body>
     <form method="post">
-        <label for="login">login : </label>
+        <label for="login">Username : </label>
         <input type="text" id="login" name="login"><br>
         <label for="password">mot de passe : </label>
         <input type="password" id="password" name="password"><br>
@@ -18,12 +18,15 @@
         if (isset($_POST['submit'])) {
             $base = new PDO('mysql:host=127.0.0.1;dbname=base1', 'root', '');
             $base->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $sql = "INSERT INTO login_password (Login, Mot_de_passe) VALUES (:login, :password)";
 
-            $sql = "SELECT Login, Mot_de_passe FROM login_password WHERE Login = :login AND Mot_de_passe = :password";
             $resultat = $base->prepare($sql);
             $resultat->execute(['login' => $_POST["login"], 'password' => $_POST["password"]]);
+
+            echo 'Compte créé';
+            header('location: ./creation_article.php');
         } else {
-            echo 'Connexion incorrecte';
+            echo 'Inscription échoué';
         }
     ?>
 </body>

@@ -6,7 +6,7 @@
     <title>Blog</title>
 </head>
 <body>
-    <form action="./index.php" method="post">
+    <form method="post">
         <label for="titre">Titre:</label>
         <input type="text" name="titre" id="titre"><br>
 
@@ -62,9 +62,13 @@
             $base = new PDO('mysql:host=127.0.0.1;dbname=base1', 'root', '');
             $base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
-            $sql = "INSERT INTO blog (titre, Commentaire, Nom_image) VALUES (:titre, :comment, :img)";
+            $sql = "INSERT INTO blog (titre, Commentairen, Nom_image) VALUES (:titre, :comment, :img)";
             $resultat = $base->prepare($sql);
-            $resultat->execute(['titre' => $titre, 'comment' => $comment, 'img' => $image]);
+            $resultat->execute([
+                'titre' => $titre,
+                'comment' => $comment,
+                'img' => $image
+            ]);
 
             echo "<br>Formulaire envoyé !";
         } else {
